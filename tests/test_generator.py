@@ -1,0 +1,32 @@
+from generator.password_generator import (
+    generate_password, 
+    has_uppercase, 
+    has_number, 
+    has_special_character
+)
+
+def test_password_length():
+    password = generate_password(12)
+    assert len(password) == 12
+
+def test_password_is_string():
+    password = generate_password(10)
+    assert isinstance(password, str)
+
+def test_has_uppercase():
+    assert has_uppercase("Abc") is True
+    
+def test_has_number():
+    assert has_number("abc1") is True
+
+def test_has_special_character():
+    assert has_special_character("abc!") is True
+
+
+def test_generate_password_length_range():
+    for length in range(4, 20):
+        password = generate_password(length)
+        assert len(password) == length
+    
+    
+    

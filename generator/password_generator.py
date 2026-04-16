@@ -20,4 +20,16 @@ def has_number(password):
 def has_special_character(password):
     return any(c in string.punctuation for c in password)
 
+def validate_password(password):
+    return (
+       
+        has_uppercase(password) and
+        has_number(password) and
+        has_special_character(password)
+    )        
 
+def generate_secure_password(length=12):
+    while True:
+        password = generate_password(length)
+        if validate_password(password):
+            return password

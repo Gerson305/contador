@@ -22,7 +22,7 @@ def has_special_character(password):
 
 def validate_password(password):
     return (
-        len(password) >= 4 and
+        
         has_uppercase(password) and
         has_number(password) and
         has_special_character(password)

@@ -27,10 +27,18 @@ jobs:
       - name: Run tests
         run: |
           pytest
+      # 1. Nuevo paso para convertir el nombre de usuario a minúsculas
+      - name: Set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >> $GITHUB_ENV
+        env:
+          OWNER: ${{ github.repository_owner }}
+
       - name: Login to Github Container Registry
         uses: docker/login-action@v4
         with:
-          registry: docker.pkg.github.com
+          # CORRECCIÓN: Usa ghcr.io para que coincida con el tag de abajo
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push container image
@@ -38,7 +46,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.actor }}/contador:latest
+          # CORRECCIÓN: Usamos la variable env.OWNER_LC que ya está en minúsculas
+          tags: ghcr.io/${{ env.OWNER_LC }}/contador:latest
       
         
           
